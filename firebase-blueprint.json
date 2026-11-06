@@ -1,0 +1,208 @@
+{
+  "entities": {
+    "Company": {
+      "title": "Company Profile & Settings",
+      "description": "Abhishek Engineering Works company profile, branding, bank accounts, and invoice preferences",
+      "type": "object",
+      "properties": {
+        "companyName": { "type": "string", "maxLength": 200 },
+        "tagline": { "type": "string", "maxLength": 200 },
+        "address": { "type": "string", "maxLength": 500 },
+        "city": { "type": "string", "maxLength": 100 },
+        "state": { "type": "string", "maxLength": 100 },
+        "stateCode": { "type": "string", "maxLength": 10 },
+        "pincode": { "type": "string", "maxLength": 20 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "altPhone": { "type": "string", "maxLength": 50 },
+        "email": { "type": "string", "maxLength": 100 },
+        "website": { "type": "string", "maxLength": 100 },
+        "gstin": { "type": "string", "maxLength": 30 },
+        "pan": { "type": "string", "maxLength": 30 },
+        "logoUrl": { "type": "string" },
+        "signatureUrl": { "type": "string" },
+        "stampUrl": { "type": "string" },
+        "upiId": { "type": "string", "maxLength": 100 },
+        "upiPayeeName": { "type": "string", "maxLength": 150 },
+        "paymentNote": { "type": "string", "maxLength": 250 },
+        "uploadedQrUrl": { "type": "string" },
+        "qrMode": { "type": "string", "enum": ["dynamic", "uploaded"] },
+        "enableUpiQr": { "type": "boolean" },
+        "enableBankDetails": { "type": "boolean" },
+        "qrVisibility": { "type": "object" },
+        "bankVisibility": { "type": "object" },
+        "bankAccounts": { "type": "array" },
+        "paymentTerms": { "type": "string", "maxLength": 1000 },
+        "deliveryTerms": { "type": "string", "maxLength": 1000 },
+        "warrantyTerms": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["companyName"]
+    },
+    "Customer": {
+      "title": "Customer Record",
+      "description": "Verified customer profiles, billing/shipping addresses, GSTIN, and current balance",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 150 },
+        "companyName": { "type": "string", "maxLength": 200 },
+        "gstin": { "type": "string", "maxLength": 30 },
+        "pan": { "type": "string", "maxLength": 30 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "email": { "type": "string", "maxLength": 100 },
+        "billingAddress": { "type": "string", "maxLength": 500 },
+        "shippingAddress": { "type": "string", "maxLength": 500 },
+        "city": { "type": "string", "maxLength": 100 },
+        "state": { "type": "string", "maxLength": 100 },
+        "stateCode": { "type": "string", "maxLength": 10 },
+        "pincode": { "type": "string", "maxLength": 20 },
+        "openingBalance": { "type": "number" },
+        "currentBalance": { "type": "number" },
+        "notes": { "type": "string", "maxLength": 1000 },
+        "status": { "type": "string", "enum": ["active", "archived"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["companyName", "billingAddress", "state"]
+    },
+    "Product": {
+      "title": "Engineering Product",
+      "description": "Product catalog with HSN codes, default rates, and GST rates",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 200 },
+        "sku": { "type": "string", "maxLength": 100 },
+        "description": { "type": "string", "maxLength": 1000 },
+        "hsn": { "type": "string", "maxLength": 30 },
+        "unit": { "type": "string", "maxLength": 30 },
+        "rate": { "type": "number" },
+        "gstRate": { "type": "number" },
+        "cessRate": { "type": "number" },
+        "minStock": { "type": "number" },
+        "currentStock": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["name", "hsn", "rate", "gstRate"]
+    },
+    "Document": {
+      "title": "Billing Document",
+      "description": "Tax Invoices, Quotations, Proforma Invoices, Challans, E-Way bills, and Receipts",
+      "type": "object",
+      "properties": {
+        "docType": { "type": "string" },
+        "docNumber": { "type": "string", "maxLength": 100 },
+        "date": { "type": "string", "maxLength": 30 },
+        "dueDate": { "type": "string", "maxLength": 30 },
+        "customerId": { "type": "string", "maxLength": 100 },
+        "customerName": { "type": "string", "maxLength": 150 },
+        "customerCompany": { "type": "string", "maxLength": 200 },
+        "customerGstin": { "type": "string", "maxLength": 30 },
+        "customerPhone": { "type": "string", "maxLength": 50 },
+        "customerEmail": { "type": "string", "maxLength": 100 },
+        "billingAddress": { "type": "string", "maxLength": 500 },
+        "shippingAddress": { "type": "string", "maxLength": 500 },
+        "customerState": { "type": "string", "maxLength": 100 },
+        "customerStateCode": { "type": "string", "maxLength": 10 },
+        "placeOfSupply": { "type": "string", "maxLength": 100 },
+        "supplyType": { "type": "string", "enum": ["intra_state", "inter_state"] },
+        "reverseCharge": { "type": "boolean" },
+        "poNumber": { "type": "string", "maxLength": 100 },
+        "poDate": { "type": "string", "maxLength": 30 },
+        "vehicleNumber": { "type": "string", "maxLength": 50 },
+        "transporterName": { "type": "string", "maxLength": 150 },
+        "items": { "type": "array" },
+        "subtotal": { "type": "number" },
+        "discountTotal": { "type": "number" },
+        "taxableTotal": { "type": "number" },
+        "cgstTotal": { "type": "number" },
+        "sgstTotal": { "type": "number" },
+        "igstTotal": { "type": "number" },
+        "freightCharges": { "type": "number" },
+        "packagingCharges": { "type": "number" },
+        "roundOff": { "type": "number" },
+        "grandTotal": { "type": "number" },
+        "totalInWords": { "type": "string", "maxLength": 500 },
+        "status": { "type": "string", "enum": ["draft", "issued", "paid", "partially_paid", "cancelled"] },
+        "paidAmount": { "type": "number" },
+        "balanceAmount": { "type": "number" },
+        "upiQrEnabled": { "type": "boolean" },
+        "bankDetailsEnabled": { "type": "boolean" },
+        "selectedBankId": { "type": "string", "maxLength": 100 },
+        "referenceDocType": { "type": "string", "maxLength": 50 },
+        "referenceDocId": { "type": "string", "maxLength": 100 },
+        "referenceDocNumber": { "type": "string", "maxLength": 100 },
+        "ewayBillDetails": { "type": "object" },
+        "challanDetails": { "type": "object" },
+        "notes": { "type": "string", "maxLength": 1000 },
+        "terms": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["docType", "docNumber", "date", "customerCompany", "items", "grandTotal"]
+    },
+    "Payment": {
+      "title": "Payment Voucher",
+      "description": "Payment receipt collection and ledger debit/credit entries",
+      "type": "object",
+      "properties": {
+        "receiptNumber": { "type": "string", "maxLength": 100 },
+        "customerId": { "type": "string", "maxLength": 100 },
+        "customerName": { "type": "string", "maxLength": 200 },
+        "documentId": { "type": "string", "maxLength": 100 },
+        "documentNumber": { "type": "string", "maxLength": 100 },
+        "amount": { "type": "number" },
+        "paymentDate": { "type": "string", "maxLength": 30 },
+        "paymentMode": { "type": "string", "enum": ["neft_rtgs", "upi", "cheque", "cash"] },
+        "referenceNo": { "type": "string", "maxLength": 100 },
+        "bankAccount": { "type": "string", "maxLength": 200 },
+        "notes": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["receiptNumber", "customerId", "amount", "paymentDate", "paymentMode"]
+    },
+    "DocSequence": {
+      "title": "Document Numbering Sequence",
+      "description": "Atomic sequence numbering preferences and counters per document type",
+      "type": "object",
+      "properties": {
+        "docType": { "type": "string", "maxLength": 50 },
+        "year": { "type": "string", "maxLength": 20 },
+        "prefix": { "type": "string", "maxLength": 50 },
+        "startingNumber": { "type": "number" },
+        "currentNumber": { "type": "number" },
+        "padding": { "type": "number" },
+        "separator": { "type": "string", "maxLength": 10 },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["docType", "prefix", "startingNumber", "currentNumber"]
+    }
+  },
+  "firestore": {
+    "/companies/{companyId}": {
+      "schema": "Company",
+      "description": "Abhishek Engineering Works company profile and settings"
+    },
+    "/companies/{companyId}/customers/{customerId}": {
+      "schema": "Customer",
+      "description": "Customer accounts, addresses, GSTINs, and balances"
+    },
+    "/companies/{companyId}/products/{productId}": {
+      "schema": "Product",
+      "description": "Engineering product catalog and HSN/GST configurations"
+    },
+    "/companies/{companyId}/documents/{docId}": {
+      "schema": "Document",
+      "description": "Invoices, Quotations, Proforma Invoices, Challans, and Receipts"
+    },
+    "/companies/{companyId}/payments/{paymentId}": {
+      "schema": "Payment",
+      "description": "Payment records, UTR references, and collection history"
+    },
+    "/companies/{companyId}/sequences/{sequenceId}": {
+      "schema": "DocSequence",
+      "description": "Sequence counters and numbering formats"
+    }
+  }
+}

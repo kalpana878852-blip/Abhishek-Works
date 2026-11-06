@@ -1,0 +1,1049 @@
+# MASTER DEVELOPMENT AND PRODUCTION REPAIR PROMPT
+# MANUFACTUREQUOTE AI – ABHISHEK ENGINEERING WORKS
+## Complete Application Audit, Firebase Integration, Bug Fixes, Data Persistence, Security and Functional Verification
+
+You are acting as a senior full-stack software architect, Firebase engineer, database administrator, UI/UX engineer and quality assurance engineer.
+
+Your responsibility is to inspect, repair, complete and stabilize my EXISTING application:
+
+**MANUFACTUREQUOTE AI – ABHISHEK ENGINEERING WORKS**
+
+The application has already been developed and deployed at:
+
+https://abhishek-eng.ai.studio/
+
+The current application design and overall interface are good. I want to preserve the existing design, branding, modules and working functionality.
+
+I do NOT want a new application.
+
+I do NOT want a redesign.
+
+I do NOT want a simulated application with non-functional buttons.
+
+I want the existing application repaired and made reliable for actual business use.
+
+Your job is to inspect the complete existing source code, identify the root causes of the reported problems, repair the frontend and backend, implement missing functionality and verify everything against the actual Firebase project.
+
+==================================================
+# 1. ABSOLUTE BACKEND REQUIREMENT – FIREBASE ONLY
+==================================================
+
+Google Firebase must be the exclusive backend infrastructure.
+
+Do not use Supabase.
+
+Do not introduce Supabase dependencies, APIs, authentication, database tables or storage.
+
+Use the existing Firebase project wherever possible.
+
+Required Firebase services:
+
+1. Firebase Authentication – user authentication and login.
+2. Cloud Firestore – permanent storage of all business information.
+3. Firebase Storage – company logos, signatures, stamps and attachments.
+4. Firebase Cloud Functions – secure server-side operations where required.
+5. Firebase Security Rules – secure access to company information.
+
+Use the Firebase JavaScript SDK correctly.
+
+Inspect the existing Firebase initialization, configuration, authentication state, database connections and storage configuration.
+
+Do not create a second Firebase project or replace the existing project unless absolutely necessary and explicitly approved.
+
+Do not reset or overwrite existing production data.
+
+If Firebase configuration is missing or incorrect, identify the exact missing configuration and provide the required setup instructions.
+
+Never invent Firebase project credentials.
+
+Never expose service-account credentials or private keys in frontend code.
+
+==================================================
+# 2. CRITICAL ISSUE: BANK ACCOUNT ADDITION FAILS
+==================================================
+
+CURRENT ERROR:
+
+When attempting to add a bank account in Company Settings, the application displays:
+
+"Failed to fetch"
+
+This issue must be investigated and resolved completely.
+
+Do not merely hide the error message.
+
+Inspect:
+
+- Bank account form component.
+- Form submission handler.
+- Firebase initialization.
+- Firestore connection.
+- Authentication state.
+- Firestore collection paths.
+- Database document structure.
+- Security rules.
+- Firebase Storage configuration if relevant.
+- Incorrect HTTP/API requests.
+- CORS errors if an external endpoint is involved.
+- Incorrect environment variables.
+- Invalid field names and data types.
+- Unhandled asynchronous operations.
+
+Identify the actual root cause.
+
+Implement a proper Firestore-based bank account management system.
+
+### Bank account fields
+
+- Bank name.
+- Account holder name.
+- Account number.
+- IFSC code.
+- Branch name.
+- Account type.
+- Default account selection.
+- Active/inactive status.
+- Creation timestamp.
+- Last updated timestamp.
+
+### Required functionality
+
+- Add multiple bank accounts.
+- View all saved bank accounts.
+- Edit bank account details.
+- Delete bank accounts when safe.
+- Set a default bank account.
+- Change the default account.
+- Display the currently selected default account.
+- Validate required fields.
+- Validate IFSC format.
+- Prevent accidental duplicate account entries.
+- Allow selecting an account for individual invoices.
+- Allow enabling/disabling bank details on documents.
+- Save all changes permanently in Firestore.
+
+After adding an account:
+
+1. Validate the form.
+2. Submit the operation.
+3. Save to the correct Firestore company collection.
+4. Wait for Firebase to confirm the write.
+5. Update the interface.
+6. Display a success notification.
+7. Ensure the record remains after refreshing the page.
+
+Never display success before the database confirms the write.
+
+If the operation fails, display the actual understandable Firebase error.
+
+==================================================
+# 3. CRITICAL ISSUE: CUSTOMER DELETION DOES NOT WORK
+==================================================
+
+Currently, I cannot delete customers.
+
+Inspect the existing customer management implementation and repair all CRUD operations.
+
+Required functionality:
+
+- Create customer.
+- View customer.
+- Edit customer.
+- Delete customer.
+- Archive customer.
+- Search customers.
+- Filter customers.
+- View customer details.
+- View customer invoices.
+- View customer quotations.
+- View payment history.
+- View outstanding balance.
+- View customer ledger.
+
+### Deletion requirements
+
+- Show a confirmation dialog.
+- Perform deletion through Firestore.
+- Verify the operation succeeded.
+- Update the customer list immediately.
+- Preserve all financial history.
+- Display meaningful errors.
+
+If the customer has invoices, payments, receipts or other financial history, do not destructively delete associated records.
+
+Instead, provide an Archive/Deactivate option.
+
+Archived customers should not appear in normal active customer selection but must remain available in historical documents and reports.
+
+Never delete financial history merely because a customer is deleted.
+
+==================================================
+# 4. CRITICAL ISSUE: COMPANY SETTINGS DO NOT SAVE OR UPDATE
+==================================================
+
+This is one of the highest-priority problems.
+
+Currently, settings and account changes are not reliably saved or reflected throughout the application.
+
+Repair the entire Settings module.
+
+Every setting must load from Firestore and save back to Firestore.
+
+### A. Company information
+
+- Company name.
+- Company logo.
+- Registered address.
+- Phone number.
+- Email address.
+- Website.
+- GSTIN.
+- PAN.
+- State.
+- State code.
+- PIN code.
+
+Default company name:
+
+ABHISHEK ENGINEERING WORKS
+
+Do not invent the remaining company information.
+
+### B. Banking settings
+
+- Multiple bank accounts.
+- Bank name.
+- Account holder.
+- Account number.
+- IFSC.
+- Branch.
+- Account type.
+- Default account.
+- Account visibility on invoices.
+
+### C. UPI settings
+
+- UPI ID.
+- Payee name.
+- UPI QR code.
+- Enable/disable UPI QR on invoices.
+- Enable/disable UPI QR on quotations.
+- Dynamic invoice payment amount.
+
+Only generate UPI QR codes using the actual UPI ID and payee information entered by the user.
+
+Do not invent UPI IDs.
+
+Generating a QR code must never automatically mark an invoice as paid.
+
+Do not confuse a normal UPI payment QR with an official GST e-invoice IRN QR.
+
+### D. Document settings
+
+- Invoice prefix.
+- Quotation prefix.
+- Proforma invoice prefix.
+- E-Challan prefix.
+- Delivery Challan prefix.
+- Payment receipt prefix.
+- E-Way Bill reference prefix.
+- Financial year.
+- Numbering preferences.
+
+### E. Branding settings
+
+- Upload company logo.
+- Preview logo.
+- Replace logo.
+- Remove logo.
+- Restore original AEW logo.
+- Upload authorized signature.
+- Upload company stamp/seal.
+- Configure document appearance.
+- Configure logo dimensions.
+
+### F. Business terms
+
+- Payment terms.
+- Delivery terms.
+- Warranty terms.
+- Terms and conditions.
+- Document footer.
+- Authorized signatory.
+
+### G. Settings persistence requirements
+
+For every setting:
+
+1. Fetch the existing value from Firestore.
+2. Populate the form.
+3. Allow editing.
+4. Save the new value.
+5. Confirm successful database write.
+6. Update the application state.
+7. Reflect the latest value in relevant modules.
+8. Retain the value after page refresh.
+9. Retain the value after logout/login.
+10. Ensure multiple sessions do not silently overwrite newer information.
+
+Use appropriate server timestamps and reliable asynchronous operations.
+
+Do not rely on temporary React state or localStorage as permanent storage.
+
+==================================================
+# 5. STRICT REAL BUSINESS DATA POLICY
+==================================================
+
+THIS REQUIREMENT IS MANDATORY.
+
+The application must contain only genuine business information entered by the user.
+
+Do not create or insert:
+
+- Demo customers.
+- Fake bank accounts.
+- Fake GSTIN numbers.
+- Fake PAN numbers.
+- Dummy invoices.
+- Sample quotations.
+- Fake products.
+- Fake services.
+- Dummy payments.
+- Fictional company addresses.
+- Fake phone numbers.
+- Fake email addresses.
+- Artificial transaction history.
+- Fabricated sales figures.
+- Fake outstanding balances.
+- Mock business records.
+
+Do not automatically populate production forms with fictional information.
+
+Do not create fake records simply to make the dashboard appear populated.
+
+### Empty database behaviour
+
+If no records exist, display:
+
+- Total customers: 0.
+- Total bank accounts: 0.
+- Total invoices: 0.
+- Total quotations: 0.
+- Total sales: ₹0.
+- Outstanding balance: ₹0.
+- Payments received: ₹0.
+
+Display professional empty states with useful actions such as:
+
+- Add Customer.
+- Add Bank Account.
+- Add Product.
+- Create Invoice.
+- Create Quotation.
+
+The only preconfigured company name should be ABHISHEK ENGINEERING WORKS.
+
+All other company information must be entered by the user.
+
+Development test data must be isolated from production data and must never be inserted into the real company database.
+
+==================================================
+# 6. FIRESTORE DATABASE ARCHITECTURE
+==================================================
+
+Use Cloud Firestore as the primary database.
+
+Organize data by company.
+
+Suggested structure:
+
+companies/{companyId}
+
+Company document:
+- companyName
+- address
+- contactInformation
+- GSTIN
+- PAN
+- state
+- stateCode
+- logoURL
+- signatureURL
+- stampURL
+- UPI settings
+- document settings
+- business terms
+- createdAt
+- updatedAt
+
+Subcollections:
+
+companies/{companyId}/bankAccounts/{accountId}
+
+companies/{companyId}/customers/{customerId}
+
+companies/{companyId}/products/{productId}
+
+companies/{companyId}/invoices/{invoiceId}
+
+companies/{companyId}/quotations/{quotationId}
+
+companies/{companyId}/proformaInvoices/{invoiceId}
+
+companies/{companyId}/eWayBills/{ewayBillId}
+
+companies/{companyId}/eChallans/{challanId}
+
+companies/{companyId}/deliveryChallans/{challanId}
+
+companies/{companyId}/payments/{paymentId}
+
+companies/{companyId}/receipts/{receiptId}
+
+companies/{companyId}/documentSequences/{sequenceId}
+
+companies/{companyId}/activityLogs/{logId}
+
+Use appropriate subcollections for invoice items, document revisions, attachments and payment allocations.
+
+Avoid unnecessarily duplicating records.
+
+Use UUIDs or Firestore document IDs for record identifiers.
+
+Use server timestamps for important creation and update fields.
+
+Use transactions or atomic operations for financial operations and document numbering wherever appropriate.
+
+Provide required Firestore indexes.
+
+Do not create duplicate collections if suitable existing collections already exist. First inspect the existing database and migrate safely if necessary.
+
+==================================================
+# 7. FIREBASE SECURITY AND AUTHENTICATION
+==================================================
+
+Implement proper authentication and company-level data isolation.
+
+Requirements:
+
+- Secure login.
+- Persistent authentication state.
+- Correct logout functionality.
+- Protected application routes.
+- Company ownership or membership validation.
+- Firestore Security Rules.
+- Storage Security Rules.
+- Role-based access where applicable.
+- Secure server-side operations.
+
+A user must never access another company's private records.
+
+Never allow unauthenticated users to read or modify financial records.
+
+Do not use open security rules.
+
+Do not disable Firestore security rules to bypass errors.
+
+Never expose Firebase Admin SDK credentials in browser code.
+
+Use Cloud Functions for operations requiring privileged access.
+
+==================================================
+# 8. COMPANY LOGO, SIGNATURE AND DOCUMENT STORAGE
+==================================================
+
+Use Firebase Storage.
+
+Organize uploaded files by company.
+
+Support:
+
+- Company logo.
+- Signature.
+- Company stamp.
+- Product images.
+- Document attachments.
+
+Requirements:
+
+- Upload.
+- Preview.
+- Replace.
+- Remove.
+- Save file references in Firestore.
+- Validate file types and file sizes.
+- Secure access.
+- Preserve existing files until a replacement upload succeeds.
+
+Do not store large image files directly in Firestore documents.
+
+==================================================
+# 9. CUSTOMER MANAGEMENT
+==================================================
+
+All customer records must be manually entered or imported by the user.
+
+Customer fields:
+
+- Customer name.
+- Business name.
+- GSTIN.
+- PAN.
+- Phone.
+- Email.
+- Billing address.
+- Shipping address.
+- State.
+- State code.
+- PIN code.
+- Notes.
+- Active/archived status.
+
+GSTIN and PAN must be optional where appropriate.
+
+Validate GSTIN formatting when provided.
+
+Do not claim that a GSTIN has been officially verified without an authorized verification service.
+
+Support customer search, editing, deletion restrictions, archival and ledger history.
+
+==================================================
+# 10. PRODUCT AND SERVICE MANAGEMENT
+==================================================
+
+Support:
+
+- Product name.
+- SKU.
+- Description.
+- HSN/SAC.
+- Unit.
+- Default selling rate.
+- GST percentage.
+- Category.
+- Optional product image.
+- Active/inactive status.
+
+Implement Add, View, Edit and Delete operations.
+
+Do not populate production data with demo products.
+
+Allow CSV import/export with proper validation and duplicate detection.
+
+==================================================
+# 11. COMPLETE BILLING AND GST ENGINE
+==================================================
+
+Maintain and repair the existing billing system.
+
+Support:
+
+- GST Tax Invoice.
+- Quotations.
+- Proforma Invoices.
+- Unlimited invoice line items.
+- Customer selection.
+- Product selection.
+- HSN/SAC.
+- Quantity.
+- Unit.
+- Rate.
+- Discount.
+- GST percentage.
+- Additional charges.
+- Freight.
+- CGST.
+- SGST.
+- IGST.
+- Exempt items.
+- Taxable value.
+- Grand total.
+- Amount in Indian Rupees words.
+
+Implement accurate calculations.
+
+Use the supplier and recipient state details to determine the applicable GST structure.
+
+Handle rounding consistently.
+
+Recalculate totals when items, quantities, rates, discounts or taxes change.
+
+Do not trust client-side totals alone for important financial records. Validate financial calculations before committing records.
+
+==================================================
+# 12. DOCUMENT MANAGEMENT
+==================================================
+
+Maintain the existing modules and make them functional:
+
+1. GST Tax Invoices.
+2. Quotations.
+3. Proforma Invoices.
+4. E-Way Bill management.
+5. E-Challans.
+6. Delivery Challans.
+7. Payment Receipts.
+
+Each document must support:
+
+- Create.
+- Save draft.
+- Preview.
+- Edit where permitted.
+- Issue.
+- Search.
+- Filter.
+- View history.
+- Generate PDF.
+- Download PDF.
+- Print.
+
+Implement appropriate document conversion:
+
+- Quotation to Proforma Invoice.
+- Quotation to Tax Invoice.
+- Quotation to E-Challan.
+- Tax Invoice to Delivery Challan.
+- Tax Invoice to E-Way Bill preparation.
+- Invoice to Payment Receipt.
+
+Preserve document references and prevent duplicate financial transactions.
+
+==================================================
+# 13. ORIGINAL AND DUPLICATE DOCUMENTS
+==================================================
+
+Support Original and Duplicate copies for applicable document types.
+
+Both copies must come from the same underlying document record.
+
+Requirements:
+
+- Original PDF.
+- Duplicate PDF.
+- Combined PDF.
+- Same document number and transaction information.
+- Clearly visible Original/Duplicate labels.
+- Correct logo and company information.
+- Consistent formatting.
+
+Draft edits must update the relevant draft document.
+
+Issued documents must retain appropriate revision history.
+
+Do not count duplicate copies as separate financial transactions.
+
+==================================================
+# 14. E-WAY BILL MANAGEMENT
+==================================================
+
+Implement E-Way Bill preparation and record management.
+
+Fields:
+
+- Supplier GSTIN.
+- Recipient GSTIN.
+- Document number.
+- Document date.
+- Dispatch address.
+- Delivery address.
+- HSN.
+- Products.
+- Quantity.
+- Taxable value.
+- Tax.
+- Transporter ID.
+- Transporter name.
+- Vehicle number.
+- Transport mode.
+- Distance.
+- Validity.
+- Official E-Way Bill number.
+- Status.
+
+Clearly distinguish internal E-Way Bill preparation from official government generation.
+
+Do not claim official generation, cancellation or updating without an authorized government portal/API integration.
+
+==================================================
+# 15. E-CHALLAN AND DELIVERY CHALLAN
+==================================================
+
+Support E-Challan and Delivery Challan creation.
+
+Include:
+
+- Document number.
+- Date.
+- Customer.
+- GSTIN, if provided.
+- Address.
+- Reference document.
+- Product.
+- HSN/SAC.
+- Quantity.
+- Unit.
+- Reason.
+- Transport details.
+- Vehicle number.
+- Remarks.
+- Authorized signature.
+- Receiver acknowledgement.
+
+Preserve document history.
+
+==================================================
+# 16. PAYMENTS, UPI AND CUSTOMER LEDGER
+==================================================
+
+Implement payment management.
+
+Payment methods:
+
+- Cash.
+- UPI.
+- Bank transfer.
+- Cheque.
+- Other.
+
+Support:
+
+- Full payments.
+- Partial payments.
+- Multiple payments against an invoice.
+- Payment references.
+- Payment date.
+- Customer allocation.
+- Outstanding balance.
+- Payment receipt.
+- Customer ledger.
+
+Never mark an invoice as paid merely because a UPI QR was generated or displayed.
+
+Only record a payment after actual confirmation or authorized manual entry.
+
+==================================================
+# 17. PROFESSIONAL PDF GENERATION
+==================================================
+
+Generate actual downloadable PDF files.
+
+Use jsPDF with AutoTable or another reliable PDF-generation library.
+
+Requirements:
+
+- A4 professional layouts.
+- AEW company branding.
+- Actual saved logo.
+- Company information.
+- Customer information.
+- GST details when available.
+- Product descriptions.
+- HSN/SAC.
+- Quantity.
+- Rates.
+- Tax breakdown.
+- Total amount.
+- Amount in words.
+- Bank account details.
+- UPI QR when configured.
+- Terms and conditions.
+- Signature and company stamp when configured.
+- Original/Duplicate labels.
+- Multi-page support.
+- Repeating table headings.
+- Proper page breaks.
+- No overlapping or clipped text.
+
+Provide separate functions:
+
+- Preview PDF.
+- Download PDF.
+- Print document.
+
+Do not use window.print() as a replacement for actual PDF generation.
+
+Do not generate fake company or customer details in PDFs.
+
+==================================================
+# 18. DOCUMENT NUMBERING
+==================================================
+
+Support independent document sequences.
+
+Examples of configurable prefixes:
+
+AEW/QTN/2026/001
+
+AEW/TI/2026/001
+
+AEW/PI/2026/001
+
+AEW/EWB/2026/001
+
+AEW/EC/2026/001
+
+AEW/DC/2026/001
+
+AEW/PR/2026/001
+
+Use atomic Firestore transactions or secure server-side logic to prevent duplicate document numbers.
+
+Never silently reuse issued or cancelled document numbers.
+
+==================================================
+# 19. DASHBOARD AND REPORTS
+==================================================
+
+Dashboard statistics must come exclusively from real Firestore records.
+
+Display:
+
+- Today's sales.
+- Monthly sales.
+- Total invoices.
+- Total quotations.
+- Total customers.
+- Payments received.
+- Outstanding balances.
+- Recent documents.
+- Pending payments.
+- Sales charts.
+- Business summaries.
+
+Never use hardcoded statistics or demo transactions.
+
+Show zeros and clear empty states when no data exists.
+
+Ensure calculations are accurate and based on the correct date ranges and document statuses.
+
+==================================================
+# 20. APPLICATION PERFORMANCE AND ERROR HANDLING
+==================================================
+
+Fix all relevant runtime and application errors.
+
+Requirements:
+
+- Correct Firebase initialization.
+- Correct authentication handling.
+- Proper asynchronous functions.
+- Loading indicators.
+- Error boundaries.
+- Meaningful error notifications.
+- Form validation.
+- Disabled submit buttons while saving.
+- Prevention of duplicate submissions.
+- Correct handling of expired sessions.
+- Refresh after successful database operations.
+- Avoid stale cached data.
+- Avoid race conditions.
+- Avoid unnecessary Firestore reads.
+- Proper Firestore indexes.
+- Responsive layout.
+
+Keep the existing AEW branding and professional design.
+
+Do not remove existing working features.
+
+==================================================
+# 21. PRODUCTION SAFETY AND DATA PRESERVATION
+==================================================
+
+This application contains business information and must be treated as a production system.
+
+Before modifying the database:
+
+- Inspect the existing schema and collections.
+- Identify existing production records.
+- Preserve existing records.
+- Avoid destructive migrations.
+- Avoid replacing company IDs.
+- Avoid changing document identifiers unnecessarily.
+- Do not clear Firestore.
+- Do not reset authentication.
+- Do not overwrite existing settings.
+- Do not remove uploaded files without authorization.
+
+Make changes incrementally.
+
+Use safe migrations and maintain backward compatibility with existing records wherever possible.
+
+If a migration is necessary, explain its impact before executing destructive operations.
+
+==================================================
+# 22. COMPLETE TESTING AND VERIFICATION
+==================================================
+
+Do not claim that a feature works simply because the code compiles.
+
+Test the actual implementation against the configured Firebase project.
+
+Use an isolated development/test environment for test records.
+
+### TEST A – FIREBASE CONNECTION
+
+- Verify Firebase initialization.
+- Verify Authentication.
+- Verify Firestore reads.
+- Verify Firestore writes.
+- Verify Storage uploads.
+- Verify Security Rules.
+
+### TEST B – BANK ACCOUNTS
+
+- Add a bank account using manually entered test information in the test environment.
+- Confirm the Firestore document is created.
+- Refresh the page.
+- Confirm the account remains visible.
+- Edit the account.
+- Verify the updated information.
+- Change the default account.
+- Verify persistence.
+- Test deletion where safe.
+
+### TEST C – CUSTOMERS
+
+- Add a test customer.
+- Edit the customer.
+- Test deletion without financial history.
+- Test archival with financial history.
+- Verify persistence after refreshing.
+
+### TEST D – COMPANY SETTINGS
+
+- Change company name.
+- Update address.
+- Update GSTIN if provided.
+- Update UPI ID if provided.
+- Upload a logo.
+- Update document settings.
+- Save.
+- Refresh.
+- Verify all changes persist.
+
+### TEST E – BILLING
+
+- Create a test quotation.
+- Create a test invoice.
+- Verify calculations.
+- Verify document numbering.
+- Generate the PDF.
+- Verify the bank account information.
+- Verify the company logo.
+- Verify the Original/Duplicate copies.
+
+### TEST F – SECURITY
+
+- Verify unauthorized access is rejected.
+- Verify users cannot access another company's data.
+- Verify Storage access permissions.
+- Verify Firestore write restrictions.
+
+Do not insert test records into the live production business database.
+
+If actual Firebase access is unavailable in the development environment, clearly report that external integration testing could not be performed. Do not fabricate test results.
+
+==================================================
+# 23. DEVELOPMENT AND IMPLEMENTATION RULES
+==================================================
+
+1. Inspect the existing codebase before modifying anything.
+2. Preserve the current application design.
+3. Preserve existing Firebase configuration.
+4. Use Firebase only.
+5. Do not use Supabase.
+6. Do not create fake business information.
+7. Do not create a new application.
+8. Do not remove existing modules.
+9. Do not replace working functionality unnecessarily.
+10. Fix actual root causes.
+11. Use proper TypeScript types.
+12. Resolve relevant compilation and runtime errors.
+13. Implement real database operations.
+14. Keep code modular and maintainable.
+15. Protect existing production records.
+16. Never claim untested features are working.
+
+If a required Firebase configuration or permission needs manual action, identify exactly what is missing and provide the precise setup instructions.
+
+==================================================
+# 24. FINAL ACCEPTANCE CRITERIA
+==================================================
+
+The work is complete only when:
+
+- Bank account addition works.
+- Bank account editing works.
+- Default bank account selection works.
+- Customer deletion works where permitted.
+- Customer archival works.
+- All company settings save correctly.
+- All account changes update correctly.
+- All settings persist after refresh.
+- Firebase is the exclusive backend.
+- Firestore stores all business records.
+- Firebase Storage stores uploaded files.
+- Authentication works correctly.
+- Security rules protect company data.
+- No demo customers exist.
+- No fake bank accounts exist.
+- No fake GSTINs exist.
+- No dummy invoices exist.
+- No fabricated dashboard statistics exist.
+- PDFs use actual saved company and customer information.
+- Existing application design and modules are preserved.
+
+==================================================
+# 25. FINAL DEVELOPMENT REPORT
+==================================================
+
+After implementation, provide a professional completion report containing:
+
+1. Existing application architecture.
+2. Root cause of the bank account "Failed to fetch" error.
+3. Root cause of customer deletion failure.
+4. Root cause of settings persistence failure.
+5. Firebase configuration changes.
+6. Firestore collection changes.
+7. Security Rules changes.
+8. Storage changes.
+9. Files modified.
+10. Features repaired.
+11. Tests performed.
+12. Actual test results.
+13. Remaining issues.
+14. Manual configuration required from me.
+
+Clearly distinguish between implemented, tested, and unverified features.
+
+# FINAL INSTRUCTION
+
+I want a reliable, production-ready ManufactureQuote AI application for ABHISHEK ENGINEERING WORKS.
+
+Do not just provide recommendations or explanations.
+
+Inspect the existing project and implement the necessary changes directly in the existing codebase.
+
+Fix the reported bugs at their actual root causes.
+
+Use Firebase exclusively.
+
+Preserve all existing business data.
+
+Never insert fake business information.
+
+Do not redesign or rebuild the application unnecessarily.
+
+**PRIORITY ORDER:**
+
+1. Repair Firebase connectivity.
+2. Fix bank account creation and editing.
+3. Fix customer deletion and archival.
+4. Fix all Company Settings persistence.
+5. Ensure all changes update throughout the application.
+6. Enforce the real-data-only policy.
+7. Verify security and data integrity.
+8. Test the complete application.
+
+The final result must be a genuinely functional business billing application, not a visual prototype.

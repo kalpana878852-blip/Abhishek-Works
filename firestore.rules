@@ -1,0 +1,65 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Company Settings & Profile
+    match /companies/{companyId} {
+      allow read: if isSignedIn() && isValidId(companyId);
+      allow create, update: if isSignedIn() && isValidId(companyId);
+      allow delete: if false; // Preserve company root
+
+      // Bank Accounts & Settings Subcollections
+      match /bankAccounts/{accountId} {
+        allow read, write: if isSignedIn() && isValidId(companyId) && isValidId(accountId);
+      }
+
+      // Customers
+      match /customers/{customerId} {
+        allow read, write: if isSignedIn() && isValidId(companyId) && isValidId(customerId);
+      }
+
+      // Products
+      match /products/{productId} {
+        allow read, write: if isSignedIn() && isValidId(companyId) && isValidId(productId);
+      }
+
+      // Billing Documents (Invoices, Quotations, Challans, Receipts, E-Way bills)
+      match /documents/{docId} {
+        allow read, write: if isSignedIn() && isValidId(companyId) && isValidId(docId);
+      }
+
+      // Payments
+      match /payments/{paymentId} {
+        allow read, write: if isSignedIn() && isValidId(companyId) && isValidId(paymentId);
+      }
+
+      // Document Numbering Sequences
+      match /sequences/{sequenceId} {
+        allow read, write: if isSignedIn() && isValidId(companyId) && isValidId(sequenceId);
+      }
+
+      // Activity Logs
+      match /activityLogs/{logId} {
+        allow read, write: if isSignedIn() && isValidId(companyId) && isValidId(logId);
+      }
+    }
+
+    // Test connection doc
+    match /test/{docId} {
+      allow read, write: if isSignedIn();
+    }
+  }
+}

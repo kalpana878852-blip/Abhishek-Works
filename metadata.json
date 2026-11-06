@@ -1,0 +1,8 @@
+{
+  "name": "MANUFACTUREQUOTE AI - Abhishek Engineering Works",
+  "description": "Comprehensive Indian Bill Book, GST Tax Invoices, Quotations, E-Way Bills & ERP for Abhishek Engineering Works.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
